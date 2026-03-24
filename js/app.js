@@ -13,7 +13,7 @@ const initTheme = () => {
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        randomizeHue();
+        // randomizeHue(); // Opsional: acak hue background blob saat ganti tema
     });
 };
 
@@ -151,35 +151,15 @@ document.getElementById('btn-save-pomo').addEventListener('click', () => {
     setPomoMode(isFocusMode);
 });
 
-// --- 5. DAFTAR TUGAS & PENGINGAT MINUM (Terintegrasi) ---
+// --- 5. DAFTAR TUGAS ---
 let todos = JSON.parse(localStorage.getItem('todos')) || [];
-let isWaterActive = localStorage.getItem('waterActive') === 'true';
 
 const saveTodos = () => localStorage.setItem('todos', JSON.stringify(todos));
-
-const toggleWaterReminder = () => {
-    isWaterActive = !isWaterActive;
-    localStorage.setItem('waterActive', isWaterActive);
-    renderTodos();
-    manageWaterCycle();
-};
 
 const renderTodos = () => {
     const list = document.getElementById('todo-list');
     list.innerHTML = '';
 
-    // Item 1: Status Minum Air (Tidak bisa dihapus, selalu di atas)
-    const waterLi = document.createElement('li');
-    waterLi.className = 'water-item';
-    waterLi.innerHTML = `
-        <span class="task-text" onclick="toggleWaterReminder()">
-            ${isWaterActive ? '💧 Minum: Aktif' : '💧 Minum: Mati'}
-        </span>
-        <span style="font-size: 0.8em; opacity: 0.7;">(Sistem)</span>
-    `;
-    list.appendChild(waterLi);
-
-    // Item lainnya
     todos.forEach((todo, index) => {
         const li = document.createElement('li');
         if (todo.completed) li.classList.add('completed');
@@ -236,9 +216,15 @@ scratchpad.addEventListener('input', (e) => {
     localStorage.setItem('scratchpad', e.target.value);
 });
 
-// --- 7. LOGIKA INTERVAL PENGINGAT MINUM AIR ---
-let waterTimerId;
+// --- 7. LOGIKA PENGINGAT MINUM AIR GLOBAL ---
+let isWaterActive = localStorage.getItem('waterActive') === 'true';
+const waterStatusBtn = document.getElementById('water-status-btn');
 const waterModal = document.getElementById('water-modal');
+let waterTimerId;
+
+const updateWaterStatusBtn = () => {
+    waterStatusBtn.innerHTML = `💧 Minum: ${isWaterActive ? '<span style="color:#0f0;">Aktif</span>' : '<span style="color:#f00;">Mati</span>'}`;
+};
 
 const showWaterModal = () => {
     waterModal.classList.remove('hidden');
@@ -253,14 +239,22 @@ const manageWaterCycle = () => {
     }
 };
 
+const toggleWaterReminder = () => {
+    isWaterActive = !isWaterActive;
+    localStorage.setItem('waterActive', isWaterActive);
+    updateWaterStatusBtn();
+    manageWaterCycle();
+};
+
+waterStatusBtn.addEventListener('click', toggleWaterReminder);
+
 document.getElementById('btn-close-water').addEventListener('click', () => {
     waterModal.classList.add('hidden');
     stopTibetanBowl();
-    manageWaterCycle(); // Reset timer setelah ditutup
+    // manageWaterCycle(); // Opsional: reset timer agar satu jam penuh lagi setelah ditutup
 });
 
 // Render Awal
-window.toggleWaterReminder = toggleWaterReminder; 
 randomizeHue();
 initTheme();
 setInterval(updateHeader, 1000);
@@ -268,4 +262,5 @@ updateHeader();
 initUserName();
 setPomoMode(true);
 renderTodos();
+updateWaterStatusBtn();
 manageWaterCycle();
