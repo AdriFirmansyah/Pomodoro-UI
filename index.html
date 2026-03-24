@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="bg-container">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="blob blob3"></div>
+    </div>
+
+    <button id="theme-toggle">🌓 Ganti Tema</button>
+
+    <header>
+        <div class="clock" id="clock">00:00</div>
+        <div class="date" id="date">Tanggal</div>
+        <div class="greeting">
+            Selamat <span id="time-greeting">Pagi</span>, 
+            <span id="user-name" contenteditable="true">Eriq</span>!
+        </div>
+        <div class="quote" id="quote">"Satu langkah kecil setiap hari."</div>
+    </header>
+
+    <main>
+        <section class="card">
+            <div class="card-bg"></div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+                <h3>Timer</h3>
+                <div class="pomo-modes">
+                    <button id="btn-focus" class="active">Fokus</button>
+                    <button id="btn-break">Istirahat</button>
+                </div>
+                <div class="timer-display" id="timer-display">25:00</div>
+                <div class="pomo-controls">
+                    <button id="btn-start">Mulai</button>
+                    <button id="btn-pause">Jeda</button>
+                    <button id="btn-reset">Reset</button>
+                </div>
+                <div class="pomo-settings">
+                    <label>Fokus: <input type="number" id="input-focus" value="25" min="1"></label>
+                    <label>Istirahat: <input type="number" id="input-break" value="5" min="1"></label>
+                    <button id="btn-save-pomo">Simpan</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-bg"></div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+                <h3>Daftar Tugas</h3>
+                <button id="btn-sort" class="sort-btn">⬆️ Urutkan (Belum Selesai ke Atas)</button>
+                <div class="todo-input-group">
+                    <input type="text" id="todo-input" placeholder="Tugas baru...">
+                    <button id="btn-add-todo">Tambah</button>
+                </div>
+                <ul id="todo-list"></ul>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-bg"></div>
+            <div class="card-overlay"></div>
+            <div class="card-content" style="display: flex; flex-direction: column;">
+                <h3>Catatan Cepat</h3>
+                <textarea id="scratchpad" placeholder="Ketik catatan di sini... otomatis tersimpan."></textarea>
+            </div>
+        </section>
+    </main>
+
+    <div id="water-modal" class="hidden">
+        <div class="modal-content">
+            <h2>Waktunya Minum Air 💧</h2>
+            <p>Tetap terhidrasi untuk menjaga fokus dan kesehatan Anda.</p>
+            <button id="btn-close-water">Saya Sudah Minum</button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
