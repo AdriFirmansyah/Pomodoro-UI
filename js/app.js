@@ -35,7 +35,7 @@ const updateHeader = () => {
 
 const initUserName = () => {
     const nameEl = document.getElementById('user-name');
-    nameEl.textContent = localStorage.getItem('userName') || 'Eriq';
+    nameEl.textContent = localStorage.getItem('userName') || ',';
     nameEl.addEventListener('blur', () => localStorage.setItem('userName', nameEl.textContent.trim() || ','));
 };
 
