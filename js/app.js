@@ -36,7 +36,7 @@ const updateHeader = () => {
 const initUserName = () => {
     const nameEl = document.getElementById('user-name');
     nameEl.textContent = localStorage.getItem('userName') || 'Eriq';
-    nameEl.addEventListener('blur', () => localStorage.setItem('userName', nameEl.textContent.trim() || 'Eriq'));
+    nameEl.addEventListener('blur', () => localStorage.setItem('userName', nameEl.textContent.trim() || ','));
 };
 
 const quotes = ["Satu langkah kecil setiap hari.", "Fokus pada proses, bukan hanya hasil.", "Mulai saja dulu, sempurnakan nanti.", "Disiplin mengalahkan motivasi."];
